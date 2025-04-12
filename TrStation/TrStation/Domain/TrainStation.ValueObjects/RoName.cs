@@ -8,6 +8,6 @@ using TrainStation.Domain.TrainStation.ValueObjects.Validators;
 
 namespace TrainStation.Domain.TrainStation.ValueObjects
 {
-    internal class RoName(string name) : ValueObject<string>(new RoNameValidator(), name); // Наследование от базовой сущности. При создании объекта класса, проверяем(валидируем) его 
+    public class RoName(string name) : ValueObject<string>(new RoNameValidator(), name); // Наследование от базовой сущности. При создании объекта класса, проверяем(валидируем) его 
 
 }
