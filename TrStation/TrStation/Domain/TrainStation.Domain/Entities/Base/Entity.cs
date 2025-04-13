@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities.Base
 {
+    /// <summary>
+    /// Представляет сущность в системе.
+    /// </summary>
+    /// <typeparam name="TId">Тип идентификатора сущности.</typeparam>
+    /// <param name="id">Идентификатор сущности.</param>
+    /// <remarks>
+    /// Инициализирует новый экземпляр класса <see cref="Entity{TId}"/>.
+    /// </remarks>
     public abstract class Entity<TId>(TId id) where TId : struct, IEquatable<TId>
     {
         /// <summary>

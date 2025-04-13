@@ -25,7 +25,7 @@ namespace TrainStation.Domain.TrainStation.ValueObjects
         public static Money operator -(Money m1, Money m2)
             => new(m1.Value - m2.Value); // Создание нового объекта, в котором результат ?
 
-        // Оператор больше(>) для двух объектов типа Money
+        // Оператор больше(>) для двух объектов типа Money 
         public static bool operator >(Money m1, Money m2)
             => m1.Value > m2.Value;
         // Оператор меньше(<) для двух объектов типа Money
@@ -39,5 +39,13 @@ namespace TrainStation.Domain.TrainStation.ValueObjects
         // Оператор меньше или равно (<=) для двух объектов типа Money 
         public static bool operator <=(Money m1, Money m2)
             => m1.Value <= m2.Value;
+        //
+        // Оператор умножения (*) объекта Money на объект PriceProcent. Результат новый объект типа Money
+        public static Money operator *(Money m1, PriceProcent m2)
+            => new(m1.Value * m2.Value); // Создание нового объекта, в котором результат ?
+        //
+        // Оператор деления (/) объекта Money на объект PriceProcent. Результат новый объект типа Money
+        public static Money operator /(Money m1, PriceProcent m2)
+            => new(m1.Value / m2.Value); // Создание нового объекта, в котором результат ?
     }
 }

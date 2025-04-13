@@ -7,9 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\TrainStation.Domain\Exceptions\" />
-    <Folder Include="Domain\TrainStation.Domain\Enums\" />
-  </ItemGroup>
-
 </Project>

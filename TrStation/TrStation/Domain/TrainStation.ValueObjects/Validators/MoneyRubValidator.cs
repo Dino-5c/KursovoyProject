@@ -16,9 +16,9 @@ namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
         /// <summary>
         /// Проверяет, что десятичная дробь не является отрицательной и не равна нулю.
         /// </summary>
-        /// <param name="value"></param>
-        /// <exception cref="MoneyAmountNonPositiveException"></exception>
-        /// <exception cref="MoneyAmountHasMoreThenTwoDecimalPlacesException"></exception>
+        /// <param name="value">Десятичное значение.</param>
+        /// <exception cref="MoneyAmountNonPositiveException">Исключение, которое происходит, если сумма денег меньше нуля.</exception>
+        /// <exception cref="MoneyAmountHasMoreThenTwoDecimalPlacesException">Исключение, которое происходит, если в указанной сумме денег более чем два знака после запятой.</exception>
         public void Validate(decimal value)
         {
             if (value < 0) 
@@ -30,8 +30,8 @@ namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
         /// <summary>
         /// Проверка на то, сколько знаков у числа после запятой
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">Десятичное значение.</param>
+        /// <returns>Если разность не равна 0, возвращаем false, Если разность равна 0, возвращаем true (у числа 2 знака  после запятой)</returns>
         private bool IsValidAmount(decimal value)
         {
             value = value * 100; // Умножаем value на 100

@@ -8,8 +8,13 @@ using TrainStation.Domain.TrainStation.ValueObjects.Exceptions;
 
 namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
 {
-    internal class DistanceValidator : IValidator<int>
+    public class DistanceValidator : IValidator<int>
     {
+        /// <summary>
+        /// Проверяет, что число не может быть меньше, чем 0.
+        /// </summary>
+        /// <param name="value">Значение.</param>
+        /// <exception cref="DistanceNonPositiveException">Исключение, которое происходит, если расстояние меньше нуля.</exception>
         public void Validate(int value)
         {
             if (value < 0)

@@ -10,7 +10,7 @@ using TrainStation.Domain.TrainStation.ValueObjects.Validators;
 namespace TrainStation.Domain.TrainStation.ValueObjects
 {
     /// <summary>
-    /// Представляет тип расстояния
+    /// Представляет тип расстояния.
     /// </summary>
     /// <param name="distance">Расстояние</param>
     public class Distance(int distance) : ValueObject<int>( new DistanceValidator(), distance) // Наследование от базовой сущности. При создании объекта класса, проверяем(валидируем) его 

@@ -8,12 +8,25 @@ using TrainStation.Domain.TrainStation.ValueObjects.Exceptions;
 
 namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
 {
-    internal class TicketTypeValidator : IValidator<string>
+    public class TicketTypeValidator : IValidator<string>
     {
-        public static int MAX_VALUE => 20;
+        /// <summary>
+        /// Максимальная длина названия типа билета
+        /// </summary>
+        public static int MAX_LENGTH => 20;
 
-        public static int MIN_VALUE => 5;
+        /// <summary>
+        /// Минимальная длина названия типа билета
+        /// </summary>
+        public static int MIN_LENGTH => 5;
 
+        /// <summary>
+        /// Проверяет строку, чтобы убедиться, что она не является нулевой, пустой и не состоит только из пробелов.
+        /// </summary>
+        /// <param name="value">Строка, в которой находятся данные.</param>
+        /// <exception cref="ArgumentNullOrWhiteSpaceException">Исключение, которое создаётся если, строка нулевая или состоит из пробелов.</exception>
+        /// <exception cref="TicketTypeLongValueException">Исключение, которое создаётся, если длина названия типа билета больше допустимой длины.</exception>
+        /// <exception cref="TicketTypeShortValueException">Исключение, которое создаётся, если длина названия типа билета меньше допустимой длины.</exception>
         public void Validate(string value)
         {
             if (string.IsNullOrWhiteSpace(value))

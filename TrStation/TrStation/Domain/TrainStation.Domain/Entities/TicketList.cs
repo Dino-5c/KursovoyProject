@@ -8,7 +8,10 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 {
     class TicketList
     {
-        private readonly List<Ticket> _ticketList;
+        /// <summary>
+        /// Коллекция билетов
+        /// </summary>
+        private readonly List<Ticket> _ticketList = []; // readonly
 
 
 
