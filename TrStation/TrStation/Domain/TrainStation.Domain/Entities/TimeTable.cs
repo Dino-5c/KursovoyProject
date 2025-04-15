@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
 
@@ -21,8 +22,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public TimeTable(Guid routeId, Guid stationId, TrainNumber numberOfTrain, DateTime timeArrival)
         {
             RouteId = routeId;
-            StationId = stationId;
-            NumberOfTrain = numberOfTrain;
+            StationId = stationId ;
+            NumberOfTrain = numberOfTrain ?? throw new ArgumentNullValueException(nameof(numberOfTrain));
             TimeArrival = timeArrival;
         }
 

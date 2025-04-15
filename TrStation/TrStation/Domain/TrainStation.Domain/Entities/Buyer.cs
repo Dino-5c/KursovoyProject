@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.Domain.Exceptions;
+using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
 using TrStation.Domain.TrainStation.ValueObjects;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    public class Buyer(Guid id, LastName buyerLastName, BuyerFirstName buyerFirstName) : Entity<Guid>(id)
+    public class Buyer(Guid id, LastName buyerLastName, FirstName buyerFirstName) : Entity<Guid>(id)
     {
-        public LastName LastName { get; private set; } = buyerLastName ?? throw new ArgumentNewValueException(nameof(buyerLastName));
+        public LastName LastName { get; private set; } = buyerLastName ?? throw new ArgumentNullValueException(nameof(buyerLastName));
 
-        public FirstName FirstName { get; private set; } = buyerFirstName ?? throw new ArgumentNewValueException(nameof(buyerFirstName)); //
+        public FirstName FirstName { get; private set; } = buyerFirstName ?? throw new ArgumentNullValueException(nameof(buyerFirstName)); //
 
 
         internal bool ChangeLastName(LastName newBuyerLastName)
@@ -22,7 +24,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
-        internal bool ChangeFirstName(BuyerFirstName newBuyerFirstName)
+        internal bool ChangeFirstName(FirstName newBuyerFirstName)
         {
             if (FirstName == newBuyerFirstName) return false;
             FirstName = newBuyerFirstName;

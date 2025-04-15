@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.ValueObjects;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    class AnimalTicket : Ticket<>
+    class AnimalTicket : Ticket
     {
 
-        public Tickettypes Tickettype { get; }
+        public TicketType Tickettype { get; }
 
-        public Procents PriceProcent { get; private set; }
+        public PriceProcent PriceProcent { get; private set; }
 
-        public AnimalTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId , Tickettypes tickettype, Procents priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
+        public AnimalTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId , TicketType tickettype, PriceProcent priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
         {
 
         }
 
-        public void SetPriceProcent(Procents priceProcent)
+        public void SetPriceProcent(PriceProcent priceProcent)
         {
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
 using TrStation.Domain.TrainStation.ValueObjects;
@@ -10,28 +11,31 @@ using TrStation.Domain.TrainStation.ValueObjects.Validators;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    class Administrator : Entity<Guid>
+    public class Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : Entity<Guid>
     {
-        public Guid AdministratorId { get; }
 
-        public LastName AdministratorLastName { get; private set; }
-        
-        public FirstName AdministratorFirstName { get; private set; }
+        public LastName AdministratorLastName { get; private set; } = administratorLastName ?? throw new ArgumentNullValueException(nameof(administratorLastName));
 
-        public Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : base(administratorId)
+        public FirstName AdministratorFirstName { get; private set; } = administratorFirstName ?? throw new ArgumentNullValueException(nameof(administratorFirstName));
+
+        //public Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : base(administratorId)
+        //{
+        //    AdministratorLastName = administratorLastName;
+        //    AdministratorFirstName = administratorFirstName;
+        //}
+
+        public bool SetAdministratorLastName(LastName administratorLastName)
         {
+            if (AdministratorLastName == administratorLastName) return false;
             AdministratorLastName = administratorLastName;
+            return true;
+        }
+
+        public bool SetAdministratorFirstName(FirstName administratorFirstName)
+        {
+            if (AdministratorFirstName == administratorFirstName) return false;
             AdministratorFirstName = administratorFirstName;
-        }
-
-        public void SetAdministratorLastName(LastName administratorLastName)
-        {
-
-        }
-
-        public void SetAdministratorFirstName(FirstName administratorFirstName)
-        {
-
+            return true;
         }
 
     }

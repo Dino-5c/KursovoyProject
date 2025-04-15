@@ -13,8 +13,6 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
     class Station : Entity<Guid>
     {
 
-        public Guid StationId { get; }
-
         public StationName StationName { get; private set; }
 
         public Guid RouteId { get; private set; }

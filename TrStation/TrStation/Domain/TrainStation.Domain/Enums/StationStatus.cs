@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TrainStation.Domain.TrainStation.Domain.Enums
 {
     /// <summary>
-    /// Перечисление состояний станции (активная (можно купить билет), замороженная (нельзя купить билет)
+    /// Перечисление состояний станции (активная (можно купить билет), замороженная (нельзя купить билет))
     /// </summary>
     public enum StationStatus
     {

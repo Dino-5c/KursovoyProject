@@ -4,22 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.ValueObjects;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    class LgotTicket : Ticket<>
+    class LgotTicket : Ticket
     {
-        public Tickettypes Tickettype { get; }
+        public TicketType Tickettype { get; }
 
-        public Procents PriceProcent { get; private set; }
+        public PriceProcent PriceProcent { get; private set; }
 
-        public LgotTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId, Tickettypes tickettype, Procents priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
+        public LgotTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId, TicketType tickettype, PriceProcent priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
         {
         }
 
-        public void SetPriceProcent(Procents priceProcent)
+        public bool SetPriceProcent(PriceProcent priceProcent)
         {
-
+            if (PriceProcent == priceProcent) return false;
+            PriceProcent = priceProcent;
+            return true;
         }
     }
 }
