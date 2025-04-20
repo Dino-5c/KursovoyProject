@@ -12,6 +12,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
     public class Tariffes : Entity<Guid>
     {
+        public TariffName TariffName { get; private set; }
         /// <summary>
         /// Стоимость проезда, цена распространяется до числа, указанного в Distance
         /// </summary>

@@ -12,7 +12,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
     /// <summary>
     /// Представляет Маршрут
     /// </summary>
-    class Route : Entity<Guid>
+    public class Route : Entity<Guid>
     {
         /// <summary>
         /// Название маршрута
@@ -41,8 +41,10 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// </summary>
         /// <param name="routeName">Название маршрута.</param>
         /// <returns>Возвращается true, если получилось изменить название маршрута. В другом случае возвращается false</returns>
-        internal bool SetRouteName(RoName routeName)
+        internal bool SetRouteName(Route route, RoName routeName/*, Administrator administrator*/)
         {
+            // if(route == null) throw new ArgumentNullValueException(nameof(route));
+             // if(administrator == typeof(Administrator))
             if (RouteName == routeName) return false;
             RouteName = routeName;
             return true;
@@ -58,5 +60,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         //{
         //    _stations.Add(station);
         //}
+
+
     }
 }

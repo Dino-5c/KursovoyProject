@@ -30,7 +30,7 @@ namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
         public void Validate(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullOrWhiteSpaceException(ExceptionMessages.RO_NAME_NOT_NULL_OR_WHITE_SPACE, nameof(value)); // С помощью ключевого слова typeof мы получаем тип класса
+                throw new ArgumentNullOrWhiteSpaceException(ExceptionMessages.RO_NAME_NOT_NULL_OR_WHITE_SPACE, nameof(value)); // С помощью ключевого слова typeof мы получаем тип класса, nameof Выражение создает имя переменной, типа или элемента в виде строковой константы.
             if (value.Length > MAX_LENGTH)
                 throw new RoNameLongValueException(value, MAX_LENGTH);
             if (value.Length < MIN_LENGTH)

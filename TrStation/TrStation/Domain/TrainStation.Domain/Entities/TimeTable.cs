@@ -49,7 +49,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             if (NumberOfTrain == numberOfTrain) return false;
             NumberOfTrain = numberOfTrain;
             return true;
-        }
+        } // Нужен массив расписаний, или они добавляются в базу данных?
 
     }
 }

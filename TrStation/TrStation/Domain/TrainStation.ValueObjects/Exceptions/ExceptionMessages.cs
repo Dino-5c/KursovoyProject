@@ -25,5 +25,6 @@ namespace TrainStation.Domain.TrainStation.ValueObjects.Exceptions
         public const string PRICE_PROCENT_HAS_NOT_MORE_THEN_TWO_DECIMAL_PLACES = "The Procent of ticket Price  has not more then two decimal places (Процент от цены билета не должен быть с более, чем двумя знаками после запятой)";
         public const string TICKET_TYPE_NOT_NULL_OR_WHITE_SPACE = "The type of ticket name mustn't be null, empty or consists only of white-space characters (Название типа билета не должно быть нулевым, пустым или состоять только из символов пробела)";
         public const string TRAIN_NUMBER_NOT_NULL_OR_WHITE_SPACE = "The number of train mustn't be null, empty or consists only of white-space characters (Номер поезда не должен быть нулевым, пустым или состоять только из символов пробела)";
+        public const string TARIFF_ZONE_NAME_NOT_NULL_OR_WHITE_SPACE = "The name of tariff zone mustn't be null, empty or consists only of white-space characters (Название тарифной зоны не должно быть нулевым пустым или состоять только из символов пробела)";
     }
 }

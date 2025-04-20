@@ -11,7 +11,7 @@ using TrStation.Domain.TrainStation.ValueObjects.Validators;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    public class Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : Entity<Guid>
+    public class Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : Entity<Guid>(administratorId)
     {
 
         public LastName AdministratorLastName { get; private set; } = administratorLastName ?? throw new ArgumentNullValueException(nameof(administratorLastName));
@@ -36,6 +36,25 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             if (AdministratorFirstName == administratorFirstName) return false;
             AdministratorFirstName = administratorFirstName;
             return true;
+        }
+
+        public void TimeTableRedacting(TimeTable timeTable)
+        {
+            if (timeTable == null) return;
+            // Исключение?
+
+            //
+            // Выбор, что хотим изменить, отдельные методы для каждого параметра, которое хотим изменить
+        }
+
+         public void SetRouteName(Route route, RoName routeName, Administrator administrator)
+        {
+            route.SetRouteName(route, routeName);
+        }
+
+        public void SetStationName(Station station, StationName stationName /*, this */)
+        {
+            station.SetStationName(stationName, this);
         }
 
     }

@@ -19,9 +19,11 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         }
 
-        public void SetPriceProcent(PriceProcent priceProcent)
+        public bool SetPriceProcent(PriceProcent priceProcent)
         {
-
+            if (PriceProcent == priceProcent) return false;
+            PriceProcent = priceProcent;
+            return true;
         }
 
     }
