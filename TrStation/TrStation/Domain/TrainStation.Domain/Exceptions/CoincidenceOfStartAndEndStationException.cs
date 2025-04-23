@@ -7,7 +7,7 @@ using TrStation.Domain.TrainStation.Domain.Entities;
 
 namespace TrainStation.Domain.TrainStation.Domain.Exceptions
 {
-    public class CoincidenceOfStartAndEndStationException(Ticket ticket, Station startStation, Station endStation)
+    internal class CoincidenceOfStartAndEndStationException(Ticket ticket, Station startStation, Station endStation)
         : InvalidOperationException($"It impossible to buy ticket number {ticket.Id}, because it for sales on one station - start station {startStation} and end station {endStation} are matched.")
     // InvalidOperationException: Исключение, которое выдается при вызове метода, недопустимого для текущего состояния объекта. Наследование: Object ==> Exception ==> SystemException ==> InvalidOperationException
     {

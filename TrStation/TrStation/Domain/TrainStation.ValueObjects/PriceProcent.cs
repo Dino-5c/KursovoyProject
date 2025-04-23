@@ -51,20 +51,5 @@ namespace TrainStation.Domain.TrainStation.ValueObjects
         public static PriceProcent operator /(PriceProcent m1, PriceProcent m2)
             => new(m1.Value / m2.Value); // Создание нового объекта, в котором результат ?
 
-        // Оператор умножения (*) объекта PriceProcent на объект с типом int. Результат новый объект типа PriceProcent
-        public static PriceProcent operator *(PriceProcent m1, int m2)
-            => new(m1.Value * m2);  // Создание нового объекта, в котором результат ?
-
-        // Оператор деления (*) объекта PriceProcent на объект с типом int. Результат новый объект типа PriceProcent
-        public static PriceProcent operator /(PriceProcent m1, int m2)
-            => new(m1.Value / m2); // Создание нового объекта, в котором результат ?
-
-        // Оператор умножения (*) объекта PriceProcent на объект с типом decimal. Результат новый объект типа PriceProcent
-        public static PriceProcent operator *(PriceProcent m1, decimal m2)
-            => new(m1.Value * m2);  // Создание нового объекта, в котором результат ?
-
-        // Оператор деления (*) объекта PriceProcent на объект с типом decimal. Результат новый объект типа PriceProcent
-        public static PriceProcent operator /(PriceProcent m1, decimal m2)
-            => new(m1.Value / m2); // Создание нового объекта, в котором результат ?
     }
 }

@@ -26,20 +26,14 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public bool IsFrozen => StationStatus == StationStatus.Frozen;
 
-        public Station(Guid stationId, StationName stationName, Route route, Tariffes tariffZone)
-            : this(stationId, stationName, route, tariffZone, StationStatus.Active)
-        {
-
-        }
-
-        protected Station(Guid stationId, StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus) 
-            : base(stationId)
+        public Station(Guid stationId, StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus): base(stationId)
         {
             StationName = stationName ?? throw new ArgumentNullValueException(nameof(stationName));
             Route = route ?? throw new ArgumentNullValueException(nameof(route));
             TariffZone = tariffZone ?? throw new ArgumentNullValueException(nameof(tariffZone));
             StationStatus = stationStatus /* ?? throw new ArgumentNullValueException(nameof(stationStatus)) */;
         }
+
 
         /// <summary>
         /// Изменение названия станции.
@@ -68,7 +62,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// </summary>
         /// <param name="stationStatus">Состояние станции(активна, заморожена).</param>
         /// <returns>Возвращается true, если получилось изменить состояние у станции. В другом случае возвращается false</returns>
-        public bool ChangeStationStatus(StationStatus stationStatus, Administrator administrator) // internal 
+        public bool ChangeStationStatus(StationStatus stationStatus) // internal 
         {
             if (StationStatus == stationStatus) return false;
             StationStatus = stationStatus;
@@ -79,7 +73,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// </summary>
         /// <param name="tariffZone">Номер тарифной зоны.</param>
         /// <returns>Возвращается true, если получилось изменить тарифную зону станции. В другом случае возвращается false</returns>
-        public bool SetTariffZone(Tariffes tariffZone, Administrator administrator)
+        public bool SetTariffZone(Tariffes tariffZone)
         {
             if (TariffZone == tariffZone) return false;
             TariffZone = tariffZone;

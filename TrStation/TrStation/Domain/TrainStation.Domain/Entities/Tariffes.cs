@@ -4,7 +4,6 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
 
@@ -13,7 +12,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
     public class Tariffes : Entity<Guid>
     {
-        public TarifZoneNames TariffName { get; private set; }
+        public TariffName TariffName { get; private set; }
         /// <summary>
         /// Стоимость проезда, цена распространяется до числа, указанного в Distance
         /// </summary>
@@ -25,11 +24,10 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public Distance Distance { get; private set; }
 
 
-        public Tariffes(Guid tariffId, TarifZoneNames tariffZoneName, Money money, Distance distance): base(tariffId)
+        public Tariffes(Guid tariffId, Money money, Distance distance): base(tariffId)
         {
-            TariffName = tariffZoneName ?? throw new ArgumentNullValueException(nameof(tariffZoneName));
-            Price = money ?? throw new ArgumentNullValueException(nameof(money));
-            Distance = distance ?? throw new ArgumentNullValueException(nameof(distance));
+            Price = money;
+            Distance = distance;
         }
         /// <summary>
         /// Изменение цены.
@@ -43,7 +41,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
         /// <summary>
-        /// Изменение расстояния.
+        /// Изменение расстояния
         /// </summary>
         /// <param name="distance">Расстояние</param>
         /// <returns>Возвращается  true, если получилось изменить расстояние, на котором действует цена. В другом случае возвращается false</returns>
@@ -54,17 +52,6 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
         //
-        /// <summary>
-        /// Изменение названия тарифной зоны.
-        /// </summary>
-        /// <param name="tarifZone">Название тарифной зоны.</param>
-        /// <returns>Возвращается true, если получилось изменить название тарифной зоны. В другом случае возвращается false</returns>
-        public bool SetTarifName(TarifZoneNames tarifZone)
-        {
-            if (TariffName == tarifZone) return false;
-            TariffName = tarifZone;
-            return true;
-        }
 
     }
 }

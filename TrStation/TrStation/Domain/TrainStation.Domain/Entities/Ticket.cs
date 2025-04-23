@@ -10,7 +10,7 @@ using TrStation.Domain.TrainStation.Domain.Entities.Base;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    public class Ticket : Entity<Guid>
+    abstract class Ticket : Entity<Guid>
     {
         // const decimal FullProcent = 1.00m;
 
@@ -51,20 +51,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             BuyDate = buyDate; // Проверка даты, времени покупки билета
 
-            if (startStation.Id == endStation.Id) throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation); // Нужно?
-
-            // Сделать: Проверка, что станции находятся на одном маршруте
-            if(startStation.Route.Id != endStation.Route.Id)
-                throw new StationsOnDifferentRoutesException(this, startStation, endStation);
-            
-            // StartStation = startStation ;
-            if(!SetStartStation(startStation))      
-                throw new NotChangedStartStationNameException(this, startStation);
-
+            if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation); // Нужно?
+            StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
+                    // Сделать: Проверка, что станции находятся на одном маршруте
             
             if(!SetEndStation(endStation)) //
-                throw new NotChangedEndStationNameException(this, endStation);
-            
+                throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
             TicketType = ticketType;
             Buyer = buyer ?? throw new ArgumentNullValueException(nameof(buyer));
             // Добавить в список билетов
@@ -76,15 +68,15 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             PriceProcent priceProcent = new PriceProcent(1.0m);
             // if (IsFull) { priceProcent = new PriceProcent(1.00m); }
-            if (IsBuggage) { priceProcent = priceProcent * 2 ; }
-            else if (IsAnimal) { priceProcent = priceProcent * 2; }
-            else if (IsLgot) { priceProcent = priceProcent / 2; }
-            else { PriceProcent = priceProcent * 1; }
+            if (IsBuggage) { priceProcent = new PriceProcent(2.0m); }
+            else if (IsAnimal) { priceProcent = new PriceProcent(2.0m); }
+            else if (IsLgot) { priceProcent = new PriceProcent(0.5m); }
+            else { PriceProcent = new PriceProcent( 1.0m); }
             return priceProcent;
         }
 
 
-        // В конструкторе создаём Guid номер билета, так как создаём билет здесь, когда покупаем а 
+        // В конструкторе создаём Guid номер билета, така как создаём билет здесь, когда покупаем
         public Ticket(DateTime buyDate, Station startStation, Station endStation, Buyer buyer, TicketTypeNaming ticketType)
             :this(Guid.NewGuid(), buyDate, startStation, endStation, buyer, ticketType)
         {
@@ -98,10 +90,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <returns>Возвращается true, если получилось изменить номер начальной станции. В другом случае возвращается false</returns>
         public bool SetStartStation(Station startStation) 
         {
-            if (!startStation.IsActive)
-                throw new BuyTicketOnFrozenStationException(this, startStation);
             if (StartStation == startStation) return false;
-            StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
+            StartStation = startStation;
             return true;
         }
 
@@ -113,10 +103,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public bool SetEndStation(Station endStation)
         {
             if (EndStation == endStation) return false;
-            if (!endStation.IsActive)
-                throw new BuyTicketOnFrozenStationException(this, endStation);
-            if (EndStation.Id == StartStation.Id)
-                throw new CoincidenceOfStartAndEndStationException(this, this.StartStation, endStation);
+            if (EndStation.Id == StartStation.Id) return false;
             EndStation = endStation ?? throw new ArgumentNullValueException(nameof(endStation));
             return true;
         }
