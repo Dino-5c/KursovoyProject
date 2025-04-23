@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.Domain.Enums;
 using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
@@ -38,6 +39,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
+
         public void TimeTableRedacting(TimeTable timeTable)
         {
             if (timeTable == null) return;
@@ -47,15 +49,32 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             // Выбор, что хотим изменить, отдельные методы для каждого параметра, которое хотим изменить
         }
 
-         public void SetRouteName(Route route, RoName routeName, Administrator administrator)
+
+
+         public bool SetRouteName(Route route, RoName routeName, Administrator administrator)
         {
-            route.SetRouteName(route, routeName);
+            if(!route.SetRouteName(routeName, this))
+                return false;
+            return true;
         }
 
-        public void SetStationName(Station station, StationName stationName /*, this */)
+        public bool SetStationName(Station station, StationName stationName /*, this */)
         {
-            station.SetStationName(stationName, this);
+            if(!station.SetStationName(stationName, this))
+                return false;
+            return true;
         }
+
+        public void SetStationStatus(Station station, StationStatus stationStatus)
+        {
+            station.ChangeStationStatus(stationStatus, this);
+        }
+
+        public void ChangeStationTariffZone(Station station, Tariffes tariffZone)
+        {
+            station.SetTariffZone(tariffZone, this);
+        }
+
 
     }
 }

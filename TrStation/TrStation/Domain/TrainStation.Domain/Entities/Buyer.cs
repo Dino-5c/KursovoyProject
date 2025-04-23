@@ -16,6 +16,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public FirstName FirstName { get; private set; } = buyerFirstName ?? throw new ArgumentNullValueException(nameof(buyerFirstName)); //
 
+        private readonly ICollection<Ticket> _tickets = [];
 
         internal bool ChangeLastName(LastName newBuyerLastName)
         {
@@ -31,6 +32,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
+        public IReadOnlyCollection<Ticket> TicketsBuyedByCuctomerr =>
+            _tickets.ToList().AsReadOnly();
 
     }
 }
