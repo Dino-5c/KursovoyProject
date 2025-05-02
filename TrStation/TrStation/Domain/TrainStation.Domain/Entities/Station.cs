@@ -34,13 +34,17 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             StationStatus = stationStatus /* ?? throw new ArgumentNullValueException(nameof(stationStatus)) */;
         }
 
+        protected Station()
+        {
+
+        }
 
         /// <summary>
         /// Изменение названия станции.
         /// </summary>
         /// <param name="stationName">Название станции.</param>
         /// <returns>Возвращается true, если получилось изменить название станции. В другом случае возвращается false</returns>
-        internal bool SetStationName(StationName stationName, Administrator administrator)
+        internal bool SetStationName(StationName stationName)
         {
             if (StationName == stationName) return false;
             StationName = stationName;
@@ -49,12 +53,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <summary>
         /// Изменение принадлежности станции к какому-то маршруту.
         /// </summary>
-        /// <param name="routeId">Номер маршрута.</param>
-        /// <returns>Возвращается true, если получилось изменить номер маршрута у станции. В другом случае возвращается false</returns>
-        internal bool SetRouteId(Guid routeId)
+        /// <param name="routeId">Маршрута.</param>
+        /// <returns>Возвращается true, если получилось изменить маршрут у станции. В другом случае возвращается false</returns>
+        internal bool SetRoute(Route route)
         {
-            if(Route.Id == routeId) return false;
-            // this.Route.Id = routeId;
+            if(Route == route) return false;
+            Route = route;
             return true;
         }
         /// <summary>

@@ -51,12 +51,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             BuyDate = buyDate; // Проверка даты, времени покупки билета
 
-            if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation); // Нужно?
+            if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this.Id, startStation.StationName, endStation.StationName); // Нужно?
             StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
-                    // Сделать: Проверка, что станции находятся на одном маршруте
-            
-            if(!SetEndStation(endStation)) //
-                throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
+            // Сделать: Проверка, что станции находятся на одном маршруте
+            SetEndStation(endStation);
+            // if() //
+                //throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
             TicketType = ticketType;
             Buyer = buyer ?? throw new ArgumentNullValueException(nameof(buyer));
             // Добавить в список билетов
@@ -83,6 +83,11 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         }
 
+        protected Ticket()
+        {
+
+        }
+
         /// <summary>
         /// Изменение номера начальной станции (откуда отправляется поезд).
         /// </summary>
@@ -103,7 +108,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public bool SetEndStation(Station endStation)
         {
             if (EndStation == endStation) return false;
-            if (EndStation.Id == StartStation.Id) return false;
+            // if (EndStation.Id == StartStation.Id) return false;
             EndStation = endStation ?? throw new ArgumentNullValueException(nameof(endStation));
             return true;
         }

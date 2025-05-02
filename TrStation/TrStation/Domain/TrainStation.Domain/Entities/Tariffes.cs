@@ -12,7 +12,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
     public class Tariffes : Entity<Guid>
     {
-        public TariffName TariffName { get; private set; }
+        public TarifZoneNames TariffName { get; private set; }
         /// <summary>
         /// Стоимость проезда, цена распространяется до числа, указанного в Distance
         /// </summary>
@@ -24,11 +24,18 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public Distance Distance { get; private set; }
 
 
-        public Tariffes(Guid tariffId, Money money, Distance distance): base(tariffId)
+        public Tariffes(Guid tariffId,TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
         {
+            TariffName = tarifZoneName;
             Price = money;
             Distance = distance;
         }
+
+        protected Tariffes()
+        {
+
+        }
+
         /// <summary>
         /// Изменение цены.
         /// </summary>
@@ -52,6 +59,13 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
         //
+
+        public bool SetTariffZoneName(TarifZoneNames tarifZoneName)
+        {
+            if (TariffName == tarifZoneName) return false;
+            TariffName = tarifZoneName;
+            return true;
+        }
 
     }
 }
