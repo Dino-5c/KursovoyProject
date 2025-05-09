@@ -46,6 +46,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <returns>Возвращается true, если получилось изменить название станции. В другом случае возвращается false</returns>
         internal bool SetStationName(StationName stationName)
         {
+            if (stationName == null) return false;
             if (StationName == stationName) return false;
             StationName = stationName;
             return true;
@@ -57,6 +58,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <returns>Возвращается true, если получилось изменить маршрут у станции. В другом случае возвращается false</returns>
         internal bool SetRoute(Route route)
         {
+            if (route == null) return false;
             if(Route == route) return false;
             Route = route;
             return true;

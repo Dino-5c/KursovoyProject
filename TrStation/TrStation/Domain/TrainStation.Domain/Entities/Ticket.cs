@@ -10,7 +10,7 @@ using TrStation.Domain.TrainStation.Domain.Entities.Base;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    abstract class Ticket : Entity<Guid>
+    public class Ticket : Entity<Guid>
     {
         // const decimal FullProcent = 1.00m;
 
@@ -45,7 +45,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <param name="buyDate">Дата покупки билета</param>
         /// <param name="startStation">Начальная станция</param>
         /// <param name="endStation">Конечная станция</param>
-        /// <param name="buyerId">Покупатель</param>
+        /// <param name="buyer">Покупатель</param>
         /// <exception cref="CoincidenceOfStartAndEndStationException">Исключение, которое срабатывает, если начальная и конечная станции совпадают.</exception>
         protected Ticket(Guid id, DateTime buyDate, Station startStation, Station endStation, Buyer buyer, TicketTypeNaming ticketType) : base(id) 
         {
@@ -54,6 +54,9 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this.Id, startStation.StationName, endStation.StationName); // Нужно?
             StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
             // Сделать: Проверка, что станции находятся на одном маршруте
+
+            // if(!(startStation.Route == endStation.Route))
+                // throw new BuyTicketsOnDifferentRoutesStations()
             SetEndStation(endStation);
             // if() //
                 //throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
@@ -70,7 +73,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             // if (IsFull) { priceProcent = new PriceProcent(1.00m); }
             if (IsBuggage) { priceProcent = new PriceProcent(2.0m); }
             else if (IsAnimal) { priceProcent = new PriceProcent(2.0m); }
-            else if (IsLgot) { priceProcent = new PriceProcent(0.5m); }
+            else if (IsLgot) { priceProcent = new PriceProcent(0.5m); } 
             else { PriceProcent = new PriceProcent( 1.0m); }
             return priceProcent;
         }

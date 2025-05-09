@@ -31,6 +31,23 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         private readonly ICollection<Tariffes> _tariffes = [];
 
+        public readonly ICollection<Ticket> _tickets = [];
+
+        private readonly ICollection<Buyer> _buyers = [];
+
+        public IReadOnlyCollection<Route> Routes =>
+            _routes.ToList().AsReadOnly();
+
+        public IReadOnlyCollection<Station> Stations =>
+            _stations.ToList().AsReadOnly();
+        public IReadOnlyCollection<Tariffes> TariffZones =>
+            _tariffes.ToList().AsReadOnly();
+
+        public IReadOnlyCollection<Ticket> Tickets =>
+            _tickets.ToList().AsReadOnly();
+
+        public IReadOnlyCollection<Buyer> Buyers =>
+            _buyers.ToList().AsReadOnly();
 
         public bool SetAdministratorLastName(LastName administratorLastName)
         {
@@ -55,28 +72,59 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             // Выбор, что хотим изменить, отдельные методы для каждого параметра, которое хотим изменить
         }
 
+        public Route CreateRoute(RoName routeName)
+        {
+            Route route = new(Guid.NewGuid(), routeName);
+            _routes.Add(route);
+            return route;
+        }
+        
+        public bool DeleteRoute(Route route)
+        {
+            if (route == null) return false; // Если null, возвращается false
+            if (!_routes.Contains(route)) return false; // Если в списке нет такого маршрута, возвращается false
+            _routes.Remove(route);
+            return true;
+        }
         public bool SetRouteName(Route route, RoName routeName, Administrator administrator)
         {
             if (route == null) return false;
+            if (!_routes.Contains(route)) return false; // Проверка, ести ли маршрут в списке маршрутов
             if(!route.SetRouteName(route, routeName)) return false;
             return true;
         }
 
+        public Station CreateStation( StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus)
+        {
+            Station station = new(Guid.NewGuid(), stationName, route, tariffZone, stationStatus);
+            _stations.Add(station);
+            return station;
+        }
 
+        public bool DeleteStation(Station station)
+        {
+            if (station == null) return false;
+            if (!_stations.Contains(station)) return false; // Нужно сделать проверку
+            _stations.Remove(station);
+            return true;
+        }
         public bool SetStationName(Station station, StationName stationName /*, this */)
         {
+            if (station == null) return false;
             if(!station.SetStationName(stationName)) return false;
             return true;
         }
 
         public bool SetStationStatus(Station station, StationStatus stationStatus)
         {
+            if (station == null) return false;
             if (!station.ChangeStationStatus(stationStatus)) return false;
             return true;
         }
 
         public bool SetTarifZoneInStation(Station station, Tariffes tariffZone)
         {
+            if (station == null) return false;
             if (!station.SetTariffZone(tariffZone)) return false;
             return true;
         }
@@ -88,21 +136,37 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
+        public Tariffes CreateTariffZone(TarifZoneNames tariffZoneName, Money money, Distance distance)
+        {
+            Tariffes tariffe = new(Guid.NewGuid(), tariffZoneName, money, distance);
+            _tariffes.Add(tariffe);
+            return tariffe;
+        }
 
+        public bool DeleteTariffZone(Tariffes tariffZone)
+        {
+            if (tariffZone == null) return false;
+            if (!_tariffes.Contains(tariffZone)) return false;
+            _tariffes.Remove(tariffZone);
+            return true;
+        }
         public bool SetDistance(Tariffes tariffZone, Distance tariffZoneDistance)
         {
+            if (tariffZone == null) return false;
             if (!tariffZone.SetDistance(tariffZoneDistance)) return false ;
             return true;
         }
 
         public bool SetPrice(Tariffes tariffZone, Money price)
         {
+            if (tariffZone == null) return false;
             if (!tariffZone.SetPrice(price)) return false;
             return true;
         }
 
         public bool SetTarifZoneName(Tariffes tariffZone, TarifZoneNames tariffZoneName)
         {
+            if (tariffZone == null) return false;
             if (!tariffZone.SetTariffZoneName(tariffZoneName)) return false;
             return true;
         }

@@ -43,6 +43,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <returns>Возвращается true, если получилось изменить цену проезда в данном регионе. В другом случае возвращается false</returns>
         public bool SetPrice(Money money)
         {
+            if (money == null) return false;
             if (Price == money) return false;
             Price = money;
             return true;
@@ -54,6 +55,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <returns>Возвращается  true, если получилось изменить расстояние, на котором действует цена. В другом случае возвращается false</returns>
         public bool SetDistance(Distance distance) 
         {
+            if (distance == null) return false;
             if (Distance == distance) return false;
             Distance = distance;
             return true;
@@ -62,6 +64,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public bool SetTariffZoneName(TarifZoneNames tarifZoneName)
         {
+            if (tarifZoneName == null) return false;
             if (TariffName == tarifZoneName) return false;
             TariffName = tarifZoneName;
             return true;
