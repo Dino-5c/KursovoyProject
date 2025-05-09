@@ -14,10 +14,10 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public PriceProcent PriceProcent { get; private set; }
 
-        public AnimalTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId , TicketType tickettype, PriceProcent priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
-        {
+        //public AnimalTicket(Guid ticketId, DateTime buyDate, Guid startStation, Guid endStation, Guid buyerId , TicketType tickettype, PriceProcent priceProcent) : base(ticketId, buyDate, startStation, endStation, buyerId)
+        //{
 
-        }
+        //}
 
         public bool SetPriceProcent(PriceProcent priceProcent)
         {

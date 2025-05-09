@@ -55,8 +55,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
             // Сделать: Проверка, что станции находятся на одном маршруте
 
-            // if(!(startStation.Route == endStation.Route))
-                // throw new BuyTicketsOnDifferentRoutesStations()
+            if (!(startStation.Route == endStation.Route))
+                throw new BuyTicketsOnDifferentRoutesStations(this.Id, startStation.StationName, endStation.StationName);
             SetEndStation(endStation);
             // if() //
                 //throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
@@ -67,16 +67,18 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             Price = (endStation.TariffZone.Price - startStation.TariffZone.Price) * PriceProcent;
         }
 
+
         public PriceProcent SetPriceProcent(/*TicketTypeNaming ticketType*/)
         {
             PriceProcent priceProcent = new PriceProcent(1.0m);
             // if (IsFull) { priceProcent = new PriceProcent(1.00m); }
-            if (IsBuggage) { priceProcent = new PriceProcent(2.0m); }
-            else if (IsAnimal) { priceProcent = new PriceProcent(2.0m); }
-            else if (IsLgot) { priceProcent = new PriceProcent(0.5m); } 
-            else { PriceProcent = new PriceProcent( 1.0m); }
+            if (IsBuggage) { priceProcent *= 2; }
+            else if (IsAnimal) { priceProcent *= 2; }
+            else if (IsLgot) { priceProcent *= 0.5m; } 
+            else { priceProcent *= 1; }
             return priceProcent;
         }
+
 
 
         // В конструкторе создаём Guid номер билета, така как создаём билет здесь, когда покупаем
