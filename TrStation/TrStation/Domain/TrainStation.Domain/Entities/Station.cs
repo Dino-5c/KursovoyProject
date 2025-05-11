@@ -18,10 +18,10 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public Route Route { get; private set; }
 
         public Tariffes TariffZone { get; private set; }
-
+         
         public StationStatus StationStatus { get; private set; }
 
-
+         
         public bool IsActive => StationStatus == StationStatus.Active;
 
         public bool IsFrozen => StationStatus == StationStatus.Frozen;
@@ -33,12 +33,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             TariffZone = tariffZone ?? throw new ArgumentNullValueException(nameof(tariffZone));
             StationStatus = stationStatus /* ?? throw new ArgumentNullValueException(nameof(stationStatus)) */;
         }
-
+         
         protected Station()
         {
 
         }
-
+         
         /// <summary>
         /// Изменение названия станции.
         /// </summary>

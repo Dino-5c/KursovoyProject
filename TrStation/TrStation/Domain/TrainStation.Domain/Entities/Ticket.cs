@@ -28,6 +28,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public PriceProcent PriceProcent { get; private set; }
 
+        private static readonly ICollection<Tariffes> _tariffZones = [];
+
         public bool IsAnimal => TicketType == TicketTypeNaming.Animal;
 
         public bool IsBuggage => TicketType == TicketTypeNaming.Buggage;
@@ -35,6 +37,9 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public bool IsLgot => TicketType == TicketTypeNaming.Lgot;
 
         public bool IsFull => TicketType == TicketTypeNaming.Full;
+
+        public IReadOnlyCollection<Tariffes> TariffZones
+            => _tariffZones.ToList().AsReadOnly();
 
         /* private readonly ICollection<Route> _routes = []; */
 
@@ -49,22 +54,52 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <exception cref="CoincidenceOfStartAndEndStationException">Исключение, которое срабатывает, если начальная и конечная станции совпадают.</exception>
         protected Ticket(Guid id, DateTime buyDate, Station startStation, Station endStation, Buyer buyer, TicketTypeNaming ticketType) : base(id) 
         {
-            BuyDate = buyDate; // Проверка даты, времени покупки билета
-
-            if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this.Id, startStation.StationName, endStation.StationName); // Нужно?
-            StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
             // Сделать: Проверка, что станции находятся на одном маршруте
-
+            if (startStation == endStation) throw new CoincidenceOfStartAndEndStationException(this.Id, startStation.StationName, endStation.StationName); // Нужно?           
             if (!(startStation.Route == endStation.Route))
                 throw new BuyTicketsOnDifferentRoutesStations(this.Id, startStation.StationName, endStation.StationName);
-            SetEndStation(endStation);
-            // if() //
-                //throw new CoincidenceOfStartAndEndStationException(this, startStation, endStation);
+            if(!endStation.IsActive) //
+                throw new BuyTicketOnNotActiveEndStationException(this.Id, endStation.StationName);
+            if(!startStation.IsActive)
+                throw new BuyTicketOnNotActiveStartStationException(this.Id, startStation.StationName);
+            // Проверка, если номер тарифной зоны начальной станции больше номера тарифной зоны конечной станции, то станции меняются местами, чтобы не изменять конструктор класса
+            if (startStation.TariffZone.TariffName > endStation.TariffZone.TariffName)
+            {
+                var tmp = startStation;
+                startStation = endStation;
+                endStation = tmp;
+            }
+
+            BuyDate = buyDate; // Проверка даты, времени покупки билета
+            StartStation = startStation ?? throw new ArgumentNullValueException(nameof(startStation));
+            SetEndStation(endStation);            
             TicketType = ticketType;
             Buyer = buyer ?? throw new ArgumentNullValueException(nameof(buyer));
+            PriceProcent = SetPriceProcent();            
             // Добавить в список билетов
-            PriceProcent = SetPriceProcent();
-            Price = (endStation.TariffZone.Price - startStation.TariffZone.Price) * PriceProcent;
+
+
+
+             if (endStation.TariffZone.Id == startStation.TariffZone.Id) 
+                Price = new Money(40m) * PriceProcent; // Если номера тарифных зон у конечной и начальной станций равны, то цена устанавливается миним. руб.
+             else
+             {
+                // Смотрим в списке тарифных зон
+                 foreach (var tariffZone in TariffZones)
+                 {
+                     if ((endStation.TariffZone.TariffName - startStation.TariffZone.TariffName) <= new TarifZoneNames(2))
+                         Price = startStation.TariffZone.Price * PriceProcent; //
+                     if (tariffZone.TariffName == (endStation.TariffZone.TariffName - startStation.TariffZone.TariffName))
+                         Price = tariffZone.Price * PriceProcent;
+                      
+                 }
+             }
+
+
+
+            /* TariffZones.Find(endStation.TariffZone.TariffName - startStation.TariffZone.TariffName);
+            copyTariffes.SetTariffZoneName(endStation.TariffZone.TariffName - startStation.TariffZone.TariffName);
+            Price = (tarifZone.) * PriceProcent; */
         }
 
 
@@ -115,6 +150,13 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             if (EndStation == endStation) return false;
             // if (EndStation.Id == StartStation.Id) return false;
             EndStation = endStation ?? throw new ArgumentNullValueException(nameof(endStation));
+            return true;
+        }
+
+        public static bool AddTariffZone(Tariffes tariffZone)
+        {
+            if (tariffZone == null) return false;
+            _tariffZones.Add(tariffZone);
             return true;
         }
     }

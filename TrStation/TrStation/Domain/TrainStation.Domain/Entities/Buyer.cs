@@ -38,11 +38,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
-        public void BuyTicket(Station startStation, Station endStation, TicketTypeNaming ticketTypeNaming)
+        public Ticket BuyTicket(Station startStation, Station endStation, TicketTypeNaming ticketTypeNaming)
         {
             // Добавить Исключения, если переданы в параметры null
             Ticket ticket = new(DateTime.Now, startStation, endStation, this, ticketTypeNaming);
             _buyerTickets.Add(ticket);
+            return ticket;
         }
 
     }

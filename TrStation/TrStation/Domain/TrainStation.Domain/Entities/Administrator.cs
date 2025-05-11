@@ -25,7 +25,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         //    AdministratorFirstName = administratorFirstName;
         //}
 
-        private readonly ICollection<Route> _routes = [];
+        private static readonly ICollection<Route> _routes = [];
 
         private readonly ICollection<Station> _stations = [];
 
@@ -98,6 +98,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             Station station = new(Guid.NewGuid(), stationName, route, tariffZone, stationStatus);
             _stations.Add(station);
+            // route._stations.Add(station); // Нужно добавить этот метод и сделать метод в классе Route публичным. Нужно сделать public в классе Route список станций.
+            // Ticket ticket.TariffZones
             return station;
         }
 
@@ -140,6 +142,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             Tariffes tariffe = new(Guid.NewGuid(), tariffZoneName, money, distance);
             _tariffes.Add(tariffe);
+            Ticket.AddTariffZone(tariffe); // Добавляем тарифую зону в список в классе Билета
             return tariffe;
         }
 

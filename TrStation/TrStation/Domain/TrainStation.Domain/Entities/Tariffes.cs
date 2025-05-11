@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
 
@@ -24,11 +25,11 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public Distance Distance { get; private set; }
 
 
-        public Tariffes(Guid tariffId,TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
+        public Tariffes(Guid tariffId, TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
         {
-            TariffName = tarifZoneName;
-            Price = money;
-            Distance = distance;
+            TariffName = tarifZoneName ?? throw new ArgumentNullValueException(nameof(tarifZoneName));
+            Price = money ?? throw new ArgumentNullValueException(nameof(money));
+            Distance = distance ?? throw new ArgumentNullValueException(nameof(distance));
         }
 
         protected Tariffes()

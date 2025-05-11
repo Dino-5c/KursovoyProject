@@ -22,7 +22,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <summary>
         /// Коллекция станций
         /// </summary>
-        private /*readonly*/ ICollection<Station> _stations = []; // Список станций
+        public /*readonly*/ ICollection<Station> _stations = []; // Список станций
 
         public Route(Guid id, RoName routeName) : base(id)
         {
@@ -57,10 +57,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         }
 
         //
-        //private void AddStation(Station station)
-        //{
-        //    _stations.Add(station);
-        //}
+        public bool AddStation(Station station)
+        {
+            if (station == null) return false;
+            _stations.Add(station);
+            return true;
+        }
 
 
     }

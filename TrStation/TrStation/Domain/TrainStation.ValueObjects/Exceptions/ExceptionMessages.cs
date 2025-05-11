@@ -26,5 +26,6 @@ namespace TrainStation.Domain.TrainStation.ValueObjects.Exceptions
         public const string TICKET_TYPE_NOT_NULL_OR_WHITE_SPACE = "The type of ticket name mustn't be null, empty or consists only of white-space characters (Название типа билета не должно быть нулевым, пустым или состоять только из символов пробела)";
         public const string TRAIN_NUMBER_NOT_NULL_OR_WHITE_SPACE = "The number of train mustn't be null, empty or consists only of white-space characters (Номер поезда не должен быть нулевым, пустым или состоять только из символов пробела)";
         public const string TARIFF_ZONE_NAME_NOT_NULL_OR_WHITE_SPACE = "The name of tariff zone mustn't be null, empty or consists only of white-space characters (Название тарифной зоны не должно быть нулевым пустым или состоять только из символов пробела)";
+        public const string TARIFF_ZONE_NUMBER_NOT_POSITIVE = "The number of tariff zone in integer type mustn't be non-positive (Название(номер) тарифной зоны в целочисленном типе не должно быть отрицательным)";
     }
 }
