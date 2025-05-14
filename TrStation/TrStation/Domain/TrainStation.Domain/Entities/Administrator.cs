@@ -90,7 +90,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         {
             if (route == null) return false;
             if (!_routes.Contains(route)) return false; // Проверка, ести ли маршрут в списке маршрутов
-            if(!route.SetRouteName(route, routeName)) return false;
+            if(!route.SetRouteName(routeName)) return false;
             return true;
         }
 
