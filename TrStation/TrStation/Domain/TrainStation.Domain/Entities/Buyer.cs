@@ -11,19 +11,35 @@ using TrStation.Domain.TrainStation.ValueObjects;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    public class Buyer(Guid id, LastName buyerLastName, FirstName buyerFirstName) : Entity<Guid>(id)
+    public class Buyer : Entity<Guid>
     {
 
 
-        public LastName LastName { get; private set; } = buyerLastName ?? throw new ArgumentNullValueException(nameof(buyerLastName));
+        public LastName LastName { get; private set; }
 
-        public FirstName FirstName { get; private set; } = buyerFirstName ?? throw new ArgumentNullValueException(nameof(buyerFirstName)); //
+        public FirstName FirstName { get; private set; }
 
         private readonly ICollection<Ticket> _buyerTickets = [];
 
         public IReadOnlyCollection<Ticket> BuyerTickets =>
             _buyerTickets.ToList().AsReadOnly();
 
+
+        protected Buyer(Guid id, LastName buyerLastName, FirstName buyerFirstName) : base(id)
+        {
+            LastName = buyerLastName ?? throw new ArgumentNullValueException(nameof(buyerLastName));
+            FirstName  = buyerFirstName ?? throw new ArgumentNullValueException(nameof(buyerFirstName)); //
+        }
+
+        protected Buyer()
+        {
+
+        }
+        public Buyer(LastName buyerLastName, FirstName buyerFirstName)
+            : this(Guid.NewGuid(), buyerLastName, buyerFirstName)
+        {
+
+        }
         internal bool ChangeLastName(LastName newBuyerLastName)
         {
             if (LastName == newBuyerLastName) return false;

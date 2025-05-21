@@ -12,12 +12,12 @@ using TrStation.Domain.TrainStation.ValueObjects.Validators;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {
-    public class Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : Entity<Guid>(administratorId)
+    public class Administrator : Entity<Guid>
     {
 
-        public LastName AdministratorLastName { get; private set; } = administratorLastName ?? throw new ArgumentNullValueException(nameof(administratorLastName));
+        public LastName AdministratorLastName { get; private set; } 
 
-        public FirstName AdministratorFirstName { get; private set; } = administratorFirstName ?? throw new ArgumentNullValueException(nameof(administratorFirstName));
+        public FirstName AdministratorFirstName { get; private set; }
 
         //public Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : base(administratorId)
         //{
@@ -49,6 +49,23 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public IReadOnlyCollection<Buyer> Buyers =>
             _buyers.ToList().AsReadOnly();
 
+
+        protected Administrator(Guid administratorId, LastName administratorLastName, FirstName administratorFirstName) : base(administratorId)
+        {
+            AdministratorLastName = administratorLastName ?? throw new ArgumentNullValueException(nameof(administratorLastName));
+            AdministratorFirstName = administratorFirstName ?? throw new ArgumentNullValueException(nameof(administratorFirstName));
+        }
+
+        protected Administrator()
+        {
+
+        }
+        public Administrator( LastName administratorLastName, FirstName administratorFirstName)
+            : this(Guid.NewGuid(), administratorLastName, administratorFirstName)
+        {
+
+        }
+
         public bool SetAdministratorLastName(LastName administratorLastName)
         {
             if (AdministratorLastName == administratorLastName) return false;
@@ -74,7 +91,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public Route CreateRoute(RoName routeName)
         {
-            Route route = new(Guid.NewGuid(), routeName);
+            Route route = new(routeName);
             _routes.Add(route);
             return route;
         }
@@ -96,18 +113,19 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public Station CreateStation( StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus)
         {
-            Station station = new(Guid.NewGuid(), stationName, route, tariffZone, stationStatus);
+            Station station = new(stationName, route, tariffZone, stationStatus);
             _stations.Add(station);
-            // route._stations.Add(station); // Нужно добавить этот метод и сделать метод в классе Route публичным. Нужно сделать public в классе Route список станций.
+            route.AddStation(station); // Нужно добавить этот метод и сделать метод в классе Route публичным. Нужно сделать public в классе Route список станций.
             // Ticket ticket.TariffZones
             return station;
         }
 
-        public bool DeleteStation(Station station)
+        public bool DeleteStation(Station station, Route route)
         {
             if (station == null) return false;
             if (!_stations.Contains(station)) return false; // Нужно сделать проверку
             _stations.Remove(station);
+            route.DeleteStation(station);
             return true;
         }
         public bool SetStationName(Station station, StationName stationName /*, this */)
@@ -140,7 +158,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public Tariffes CreateTariffZone(TarifZoneNames tariffZoneName, Money money, Distance distance)
         {
-            Tariffes tariffe = new(Guid.NewGuid(), tariffZoneName, money, distance);
+            Tariffes tariffe = new(tariffZoneName, money, distance);
             _tariffes.Add(tariffe);
             Ticket.AddTariffZone(tariffe); // Добавляем тарифую зону в список в классе Билета
             return tariffe;

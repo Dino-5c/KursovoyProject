@@ -22,14 +22,17 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// <summary>
         /// Коллекция станций
         /// </summary>
-        public /*readonly*/ ICollection<Station> _stations = []; // Список станций
+        public readonly ICollection<Station> _stations = []; // Список станций
 
-        public Route(Guid id, RoName routeName) : base(id)
+        public Route(RoName routeName) : this(Guid.NewGuid(), routeName)
         {
-            RouteName = routeName ?? throw new ArgumentNullValueException(nameof(routeName));
 
         }
 
+        protected Route(Guid id, RoName routeName)
+        {
+            RouteName = routeName ?? throw new ArgumentNullValueException(nameof(routeName));
+        }
         protected Route()
         {
 
@@ -64,6 +67,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
+        public bool DeleteStation(Station station)
+        {
+            if (station == null) return false;
+            _stations.Remove(station);
+            return true;
+        }
 
     }
 }

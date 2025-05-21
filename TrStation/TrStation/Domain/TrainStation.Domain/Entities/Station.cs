@@ -26,14 +26,18 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public bool IsFrozen => StationStatus == StationStatus.Frozen;
 
-        public Station(Guid stationId, StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus): base(stationId)
+        protected Station(Guid stationId, StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus) : base(stationId)
         {
             StationName = stationName ?? throw new ArgumentNullValueException(nameof(stationName));
             Route = route ?? throw new ArgumentNullValueException(nameof(route));
             TariffZone = tariffZone ?? throw new ArgumentNullValueException(nameof(tariffZone));
             StationStatus = stationStatus /* ?? throw new ArgumentNullValueException(nameof(stationStatus)) */;
         }
-         
+        public Station( StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus) 
+            : this(Guid.NewGuid(), stationName, route, tariffZone, stationStatus)
+        {
+
+        }        
         protected Station()
         {
 

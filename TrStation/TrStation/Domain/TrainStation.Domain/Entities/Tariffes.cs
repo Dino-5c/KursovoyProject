@@ -25,16 +25,22 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public Distance Distance { get; private set; }
 
 
-        public Tariffes(Guid tariffId, TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
+        public Tariffes(TarifZoneNames tarifZoneName, Money money, Distance distance)
+            : this(Guid.NewGuid(), tarifZoneName, money, distance)
         {
-            TariffName = tarifZoneName ?? throw new ArgumentNullValueException(nameof(tarifZoneName));
-            Price = money ?? throw new ArgumentNullValueException(nameof(money));
-            Distance = distance ?? throw new ArgumentNullValueException(nameof(distance));
+
         }
 
         protected Tariffes()
         {
 
+        }
+
+        protected Tariffes(Guid tariffId, TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
+        {
+            TariffName = tarifZoneName ?? throw new ArgumentNullValueException(nameof(tarifZoneName));
+            Price = money ?? throw new ArgumentNullValueException(nameof(money));
+            Distance = distance ?? throw new ArgumentNullValueException(nameof(distance));
         }
 
         /// <summary>

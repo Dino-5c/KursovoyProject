@@ -1,4 +1,5 @@
-﻿using TrainStation.Domain.TrainStation.Domain.Enums;
+﻿using System.Linq.Expressions;
+using TrainStation.Domain.TrainStation.Domain.Enums;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities;
 using TrStation.Domain.TrainStation.ValueObjects;
@@ -11,11 +12,11 @@ namespace TrStation
         {
             Console.WriteLine("Hello, World!");
 
-            Administrator administrator_1 = new(Guid.NewGuid(), new LastName("LastName"), new FirstName("FirstName"));
+            Administrator administrator_1 = new(new LastName("LastName"), new FirstName("FirstName"));
 
-            Buyer buyer1 = new(Guid.NewGuid(), new LastName("LastName2"), new FirstName("FirstName2"));
+            Buyer buyer1 = new(new LastName("LastName2"), new FirstName("FirstName2"));
 
-            Route route1 = administrator_1.CreateRoute( new RoName("Направление Южное"));
+            Route route1 = administrator_1.CreateRoute(new RoName("Направление Южное"));
 
             Route route2 = administrator_1.CreateRoute(new RoName("Направление Западное"));
 
@@ -77,11 +78,12 @@ namespace TrStation
             {
                 Console.WriteLine(ticket.Id);
             }
+            MetodsOfAdministrator(administrator_1, route2, tarifZone5, StationStatus.Frozen);
             Console.WriteLine();
-
+            // administrator_1
             try
             {
-
+                Ticket ticket9 = buyer1.BuyTicket(station6, station11, TicketTypeNaming.Full);
                 Ticket ticket3 = BuyTickets(buyer1, administrator_1);
                 Console.WriteLine($"{ticket3.Id} {ticket3.BuyDate} {ticket3.Buyer.FirstName} {ticket3.StartStation.StationName} {ticket3.EndStation.StationName} {ticket3.Price} {ticket3.TicketType}");
             }
@@ -100,13 +102,45 @@ namespace TrStation
                 Station s1 = ChooseStationn(administrator);
             Console.WriteLine("Выбор конечной станции ");
                 Station s2 = ChooseStationn(administrator);
-                // TicketTypeNaming.Full;
-                    
-                Ticket ticket = buyer.BuyTicket(s1, s2, TicketTypeNaming.Full);
+            // TicketTypeNaming.Full;
+            Console.WriteLine("Выбор Типа билета ");
+            TicketTypeNaming ticketType1 = ChooseTicketType();
+                Ticket ticket = buyer.BuyTicket(s1, s2, ticketType1);
                 Console.WriteLine("aa"); return ticket;
                 
 
 
+        }
+
+        public static void MetodsOfAdministrator(Administrator administrator, Route route, Tariffes tariffZone, StationStatus stationStatus)
+        {
+            //int tmp = 0;
+
+            //Console.WriteLine("Выберите");
+            //while (!int.TryParse(Console.ReadLine(), out tmp) || tmp < 0 || tmp > 5)
+            //{
+            //    Console.WriteLine("Error! Выберите другое значение из номеров станций.");
+            //}
+
+            AddEntity(administrator, route, tariffZone, stationStatus);
+
+        }
+
+        public static void AddEntity(Administrator administrator, Route route, Tariffes tariffZone, StationStatus stationStatus)
+        {
+            Station station = administrator.CreateStation(new StationName("Ст. 12-"), administrator.Routes.ToArray()[1], tariffZone, stationStatus);
+            foreach(var i in administrator.Stations)
+            {
+                Console.WriteLine(i.StationName);
+            }
+            Console.WriteLine();
+            administrator.DeleteStation(station, route);
+            foreach (var i in administrator.Stations)
+            {
+                Console.WriteLine(i.StationName);
+            }
+
+            Console.WriteLine();
         }
 
         public static Station ChooseStationn(Administrator administrator1)
@@ -146,5 +180,33 @@ namespace TrStation
             return stationss2[0];
         }
 
+        public static TicketTypeNaming ChooseTicketType()
+        {
+            int tmp = 0;
+
+            string[] types = ["Полный", "Льготный", "С животными", "С багажом"];
+
+            for(int i = 0; i < types.Length; i++)
+            {
+                Console.WriteLine(i + " " + types[i]);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Выберите тип билетов");
+            while (!int.TryParse(Console.ReadLine(), out tmp) || tmp < 0 || tmp > 3)
+            {
+                Console.WriteLine("Error! Выберите другое значение из номеров [0; 3]");
+            }
+
+            if (tmp == 0) return TicketTypeNaming.Full;
+            else if (tmp == 1) return TicketTypeNaming.Lgot;
+            else if (tmp == 2) return TicketTypeNaming.Animal;
+            else if (tmp == 3) return TicketTypeNaming.Buggage;
+            else return TicketTypeNaming.Full;
+
+        }
+
     }
 }
+
+
