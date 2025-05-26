@@ -13,5 +13,5 @@ namespace TrainStation.Domain.TrainStation.ValueObjects
     /// </summary>
     /// <param name="numberOfTrain">Номер поезда</param>
     public class TrainNumber(string numberOfTrain) : ValueObject<string>(new TrainNumberValidator(), numberOfTrain); // Наследование от базовой сущности. При создании объекта класса, проверяем(валидируем) его 
-
+     
 }

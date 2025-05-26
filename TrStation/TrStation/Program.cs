@@ -179,7 +179,7 @@ namespace TrStation
             Console.WriteLine( "Выбрана станция " + stationss2[0].StationName);
             return stationss2[0];
         }
-
+         
         public static TicketTypeNaming ChooseTicketType()
         {
             int tmp = 0;

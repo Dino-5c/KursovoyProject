@@ -8,7 +8,7 @@ using TrStation.Domain.TrainStation.ValueObjects;
 namespace TrainStation.Domain.TrainStation.ValueObjects.Exceptions
 {
     internal class FirstNameLongValueException(string firstName, int maxLength)
-                : FormatException($"First name length {firstName} greated than maximum allowed(допустимая длина) length {maxLength}") // FormatException. Исключение, которое возникает в случае, если формат аргумента недопустим или строка составного формата построена неправильно.  Наследование Object ==> Exception ==> SystemException ==> FormatException
+                : ArgumentException($"First name length {firstName} greated than maximum allowed(допустимая длина) length {maxLength}") // ArgumentException, Это исключение выбрасывается, если один из передаваемых методу аргументов является недопустимым. Наследование: Object ==> Exception ==> SystemException ==> ArgumentException
     {
         public string FirstName => firstName;
         public int MaxLength => maxLength;

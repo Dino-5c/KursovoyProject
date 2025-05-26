@@ -11,7 +11,7 @@ namespace TrainStation.Domain.TrainStation.Domain.Enums
     /// </summary>
     public enum StationStatus
     {
-        Active,
+        Active, 
         Frozen
     }
 }

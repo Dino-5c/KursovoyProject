@@ -134,7 +134,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             if(!station.SetStationName(stationName)) return false;
             return true;
         }
-
+         
         public bool SetStationStatus(Station station, StationStatus stationStatus)
         {
             if (station == null) return false;

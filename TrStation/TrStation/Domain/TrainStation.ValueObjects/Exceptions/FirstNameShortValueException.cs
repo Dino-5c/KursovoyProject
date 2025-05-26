@@ -8,7 +8,7 @@ using TrStation.Domain.TrainStation.ValueObjects;
 namespace TrainStation.Domain.TrainStation.ValueObjects.Exceptions
 {
     internal class FirstNameShortValueException(string firstName, int minLength)
-               : FormatException($"First name length {firstName} less than minimum allowed(допустимая длина) length {minLength}") // FormatException. Исключение, которое возникает в случае, если формат аргумента недопустим или строка составного формата построена неправильно.  Наследование Object ==> Exception ==> SystemException ==> FormatException
+               : ArgumentException($"First name length {firstName} less than minimum allowed(допустимая длина) length {minLength}") // ArgumentException, Это исключение выбрасывается, если один из передаваемых методу аргументов является недопустимым. Наследование: Object ==> Exception ==> SystemException ==> ArgumentException
     {
         public string FirstName => firstName;
         public int MinLength => minLength;

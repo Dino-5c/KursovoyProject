@@ -8,5 +8,6 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
 {
     internal class ApplicationDbContext
     {
+
     }
 }
