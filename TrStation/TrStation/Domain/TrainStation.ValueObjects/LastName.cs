@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TrainStation.Domain.TrainStation.ValueObjects.Base;
 using TrainStation.Domain.TrainStation.ValueObjects.Validators;
 
-namespace TrStation.Domain.TrainStation.ValueObjects
+namespace TrainStation.Domain.TrainStation.ValueObjects
 {
     /// <summary>
     /// Представляет тип фамилии сущности (покупателя, администратора и т. д.).

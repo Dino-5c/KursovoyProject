@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TrainStation.Domain.TrainStation.ValueObjects.Base;
 using TrainStation.Domain.TrainStation.ValueObjects.Exceptions;
 
-namespace TrStation.Domain.TrainStation.ValueObjects.Validators
+namespace TrainStation.Domain.TrainStation.ValueObjects.Validators
 {
     public class FirstNameValidator : IValidator<string>
     {
