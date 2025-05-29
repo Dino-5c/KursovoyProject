@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrStation.Domain.TrainStation.ValueObjects;
+
 
 namespace TrainStation.Domain.TrainStation.ValueObjects.Exceptions
 {

@@ -7,8 +7,8 @@ using TrainStation.Domain.TrainStation.Domain.Enums;
 using TrainStation.Domain.TrainStation.Domain.Exceptions;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities.Base;
-using TrStation.Domain.TrainStation.ValueObjects;
-using TrStation.Domain.TrainStation.ValueObjects.Validators;
+using TrainStation.Domain.TrainStation.ValueObjects;
+using TrainStation.Domain.TrainStation.ValueObjects.Validators;
 
 namespace TrStation.Domain.TrainStation.Domain.Entities
 {

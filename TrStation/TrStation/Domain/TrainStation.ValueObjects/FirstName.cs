@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainStation.Domain.TrainStation.ValueObjects.Base;
 using TrainStation.Domain.TrainStation.ValueObjects.Validators;
-using TrStation.Domain.TrainStation.ValueObjects.Validators;
+
 
 namespace TrainStation.Domain.TrainStation.ValueObjects
 {
