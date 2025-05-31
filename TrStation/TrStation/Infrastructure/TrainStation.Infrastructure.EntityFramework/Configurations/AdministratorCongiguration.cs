@@ -17,7 +17,7 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
         public void Configure(EntityTypeBuilder<Administrator> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.Id);
             builder.Property(x => x.AdministratorFirstName)
                 .IsRequired()
                 .HasConversion(administratorFirstName => administratorFirstName.Value, str => new FirstName(str))
@@ -26,7 +26,13 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 .IsRequired()
                 .HasConversion(administratorLastName => administratorLastName.Value, str => new LastName(str))
                 .HasMaxLength(LastNameValidator.MAX_LENGTH);
-            builder.Ignore(x => x.Stations);
+            builder.HasMany<Route>("_routes").WithOne(x => x.Administrator);
+            builder.HasMany<Tariffes>("_tariffes").WithOne(x => x.Administrator);
+            builder.HasMany<Buyer>("_buyers").WithOne(x => x.Administrator);
+
+            builder.Ignore(x => x.Buyers);
+            builder.Ignore(x => x.TariffZones);
+            builder.Ignore(x => x.Routes);
         }
     }
 }

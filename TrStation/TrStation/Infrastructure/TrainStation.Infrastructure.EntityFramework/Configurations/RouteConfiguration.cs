@@ -20,6 +20,9 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 .IsRequired()
                 .HasConversion(routeName => routeName.Value, strin => new RoName(strin));
             builder.HasMany<Station>("_stations").WithOne(x => x.Route);
+            builder.HasOne(x => x.Administrator).WithMany("_routes");
+            builder.Navigation(x => x.Administrator).AutoInclude();
+            builder.Ignore(x => x.Stations);
         }
     }
 }

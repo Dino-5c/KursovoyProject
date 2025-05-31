@@ -24,9 +24,13 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// </summary>
         public Distance Distance { get; private set; }
 
+        /// <summary>
+        /// Администратор, который добавил сущность
+        /// </summary>
+        public Administrator Administrator { get; }
 
-        public Tariffes(TarifZoneNames tarifZoneName, Money money, Distance distance)
-            : this(Guid.NewGuid(), tarifZoneName, money, distance)
+        public Tariffes(TarifZoneNames tarifZoneName, Money money, Distance distance, Administrator administrator)
+            : this(Guid.NewGuid(), tarifZoneName, money, distance, administrator)
         {
 
         }
@@ -36,11 +40,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         }
 
-        protected Tariffes(Guid tariffId, TarifZoneNames tarifZoneName, Money money, Distance distance): base(tariffId)
+        protected Tariffes(Guid tariffId, TarifZoneNames tarifZoneName, Money money, Distance distance, Administrator administrator): base(tariffId)
         {
             TariffName = tarifZoneName ?? throw new ArgumentNullValueException(nameof(tarifZoneName));
             Price = money ?? throw new ArgumentNullValueException(nameof(money));
             Distance = distance ?? throw new ArgumentNullValueException(nameof(distance));
+            Administrator = administrator ?? throw new ArgumentNullValueException(nameof(administrator));
         }
 
         /// <summary>

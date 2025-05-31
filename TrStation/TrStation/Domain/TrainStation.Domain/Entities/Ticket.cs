@@ -28,7 +28,12 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public PriceProcent PriceProcent { get; private set; }
 
-        private static readonly ICollection<Tariffes> _tariffZones = [];
+        /// <summary>
+        /// Администратор, который добавил сущность
+        /// </summary>
+        // public Administrator Administrator { get; }
+
+        // private static readonly ICollection<Tariffes> _tariffZones = [];
 
         public bool IsAnimal => TicketType == TicketTypeNaming.Animal;
 
@@ -38,8 +43,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
 
         public bool IsFull => TicketType == TicketTypeNaming.Full;
 
-        public IReadOnlyCollection<Tariffes> TariffZones
-            => _tariffZones.ToList().AsReadOnly();
+        // public IReadOnlyCollection<Tariffes> TariffZones
+            // => _tariffZones.ToList().AsReadOnly();
 
         /* private readonly ICollection<Route> _routes = []; */
 
@@ -85,7 +90,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
              else
              {
                 // Смотрим в списке тарифных зон
-                 foreach (var tariffZone in TariffZones)
+                 foreach (var tariffZone in buyer.Administrator.TariffZones)
                  {
                      if ((endStation.TariffZone.TariffName - startStation.TariffZone.TariffName) <= new TarifZoneNames(2))
                          Price = startStation.TariffZone.Price * PriceProcent; //
@@ -153,11 +158,11 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             return true;
         }
 
-        public static bool AddTariffZone(Tariffes tariffZone)
-        {
-            if (tariffZone == null) return false;
-            _tariffZones.Add(tariffZone);
-            return true;
-        }
+        //public static bool AddTariffZone(Tariffes tariffZone)
+        //{
+        //    if (tariffZone == null) return false;
+        //    _tariffZones.Add(tariffZone);
+        //    return true;
+        //}
     }
 }

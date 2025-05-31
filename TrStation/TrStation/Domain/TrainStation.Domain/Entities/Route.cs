@@ -20,18 +20,26 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public RoName RouteName { get; private set; }
 
         /// <summary>
+        /// Администратор, который добавил сущность
+        /// </summary>
+        public Administrator Administrator { get; }
+
+        /// <summary>
         /// Коллекция станций
         /// </summary>
-        public readonly ICollection<Station> _stations = []; // Список станций
+        private readonly ICollection<Station> _stations = []; // Список станций
 
-        public Route(RoName routeName) : this(Guid.NewGuid(), routeName)
+        public IReadOnlyCollection<Station> Stations =>
+            _stations.ToList().AsReadOnly();
+        public Route(RoName routeName, Administrator administrator) : this(Guid.NewGuid(), routeName, administrator)
         {
 
         }
 
-        protected Route(Guid id, RoName routeName)
+        protected Route(Guid id, RoName routeName, Administrator administrator)
         {
             RouteName = routeName ?? throw new ArgumentNullValueException(nameof(routeName));
+            Administrator = administrator ?? throw new ArgumentNullValueException(nameof(administrator));
         }
         protected Route()
         {

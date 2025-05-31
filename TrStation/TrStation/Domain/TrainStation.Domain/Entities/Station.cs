@@ -21,7 +21,6 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
          
         public StationStatus StationStatus { get; private set; }
 
-         
         public bool IsActive => StationStatus == StationStatus.Active;
 
         public bool IsFrozen => StationStatus == StationStatus.Frozen;
@@ -32,6 +31,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
             Route = route ?? throw new ArgumentNullValueException(nameof(route));
             TariffZone = tariffZone ?? throw new ArgumentNullValueException(nameof(tariffZone));
             StationStatus = stationStatus /* ?? throw new ArgumentNullValueException(nameof(stationStatus)) */;
+
         }
         public Station( StationName stationName, Route route, Tariffes tariffZone, StationStatus stationStatus) 
             : this(Guid.NewGuid(), stationName, route, tariffZone, stationStatus)

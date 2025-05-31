@@ -26,6 +26,8 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
             builder.Property(x => x.Distance)
                 .IsRequired()
                 .HasConversion(distance => distance.Value, c => new Distance(c));
+            builder.HasOne(x => x.Administrator).WithMany("_tariffes");
+            builder.Navigation(x => x.Administrator).AutoInclude();
             // builder.HasOne(x => x.) // Как добавить, что тарифы связаны с билетами, (в Билете есть коллекция тарифов)
               // И администратор связан с билетами. Или он может посмотреть билеты у покупателей
 

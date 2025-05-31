@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using TrainStation.Domain.TrainStation.Domain.Enums;
 using TrainStation.Domain.TrainStation.ValueObjects;
 using TrStation.Domain.TrainStation.Domain.Entities;
@@ -14,7 +15,7 @@ namespace TrStation
 
             Administrator administrator_1 = new(new LastName("LastName"), new FirstName("FirstName"));
 
-            Buyer buyer1 = new(new LastName("LastName2"), new FirstName("FirstName2"));
+            Buyer buyer1 = new(new LastName("LastName2"), new FirstName("FirstName2"), administrator_1);
 
             Route route1 = administrator_1.CreateRoute(new RoName("Направление Южное"));
 
@@ -92,6 +93,14 @@ namespace TrStation
                 Console.WriteLine(e.Message); 
             }
 
+            foreach(Buyer bu1 in administrator_1.Buyers)
+            {
+                Console.WriteLine($"{bu1.LastName} {bu1.FirstName}");
+            }
+
+            administrator_1.SetStationName(station6, new StationName("Западная площадка 1"));
+            Console.WriteLine($"{station6.StationName} {station6.TariffZone.TariffName}");
+
         }
 
 
@@ -129,15 +138,23 @@ namespace TrStation
         public static void AddEntity(Administrator administrator, Route route, Tariffes tariffZone, StationStatus stationStatus)
         {
             Station station = administrator.CreateStation(new StationName("Ст. 12-"), administrator.Routes.ToArray()[1], tariffZone, stationStatus);
-            foreach(var i in administrator.Stations)
+            foreach(var i in administrator.Routes)
             {
-                Console.WriteLine(i.StationName);
+                foreach(var st in i.Stations)
+                {
+                    Console.WriteLine(st.StationName);
+                }
+                
             }
             Console.WriteLine();
             administrator.DeleteStation(station, route);
-            foreach (var i in administrator.Stations)
+            foreach (var i in administrator.Routes)
             {
-                Console.WriteLine(i.StationName);
+                foreach(var st in i.Stations)
+                {
+                    Console.WriteLine(st.StationName);
+                }
+
             }
 
             Console.WriteLine();
@@ -145,13 +162,22 @@ namespace TrStation
 
         public static Station ChooseStationn(Administrator administrator1)
         {
-            var stationss2 = administrator1.Stations.ToArray();
+            List<Station> stationss2 = [];
+            foreach (var st in administrator1.Routes) 
+            {
+                foreach(var stati in st.Stations)
+                {
+                    stationss2.Add(stati);
+                }
+                
+            };
+            // public  
             /* foreach(var st in administrator1.Stations) */
             /* { */
             /* Console.WriteLine(st.StationName); */
             /* } */
 
-            for (int i = 0; i < stationss2.Length; i++)
+            for (int i = 0; i < stationss2.Count; i++)
             {
                 Console.Write(i + "\t");
                 Console.WriteLine(stationss2[i].StationName); 
@@ -161,13 +187,13 @@ namespace TrStation
             int tmp = 0;
 
             Console.WriteLine("Выберите");
-            while (!int.TryParse(Console.ReadLine(), out tmp) || tmp < 0 || tmp > stationss2.Length)
+            while (!int.TryParse(Console.ReadLine(), out tmp) || tmp < 0 || tmp > stationss2.Count)
             {
                 Console.WriteLine("Error! Выберите другое значение из номеров станций .");
             }
 
 
-            for (int i = 0; i < stationss2.Length; i++)
+            for (int i = 0; i < stationss2.Count; i++)
             {
                 if (tmp == i)
                 {

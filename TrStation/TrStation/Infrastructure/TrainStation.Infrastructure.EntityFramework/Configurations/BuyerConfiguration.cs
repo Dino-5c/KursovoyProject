@@ -25,8 +25,12 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 .IsRequired()
                 .HasConversion(lastName => lastName.Value, strin => new LastName(strin))
                 .HasMaxLength(LastNameValidator.MAX_LENGTH);
+            builder.HasOne(x => x.Administrator).WithMany("_buyers");
             // Связь
+            builder.HasMany<Ticket>("_buyerTickets").WithOne(x => x.Buyer);
             builder.Ignore(x => x.BuyerTickets);
+            builder.Navigation(x => x.Administrator).AutoInclude();
+
         }
     }
 }
