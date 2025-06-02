@@ -31,6 +31,9 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
             builder.Ignore(x => x.BuyerTickets);
             builder.Navigation(x => x.Administrator).AutoInclude();
 
+            /* dotnet tool install --global dotnet-ef
+        dotnet ef migrations add InitialCreate
+        dotnet ef database update */
         }
     }
 }

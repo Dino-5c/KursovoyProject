@@ -29,5 +29,6 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
+
     }
 }

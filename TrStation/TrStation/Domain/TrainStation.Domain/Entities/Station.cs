@@ -21,6 +21,8 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
          
         public StationStatus StationStatus { get; private set; }
 
+        public Guid TariffZoneId { get; private set; }
+
         public bool IsActive => StationStatus == StationStatus.Active;
 
         public bool IsFrozen => StationStatus == StationStatus.Frozen;

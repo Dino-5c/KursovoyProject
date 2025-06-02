@@ -29,6 +29,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         /// </summary>
         private readonly ICollection<Station> _stations = []; // Список станций
 
+
         public IReadOnlyCollection<Station> Stations =>
             _stations.ToList().AsReadOnly();
         public Route(RoName routeName, Administrator administrator) : this(Guid.NewGuid(), routeName, administrator)

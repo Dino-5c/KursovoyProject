@@ -17,9 +17,9 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         public DateTime BuyDate { get; }
 
         public Station StartStation { get; private set; }
-
+        public Guid StartStationId { get; set; }
         public Station EndStation { get; private set; }
-
+        public Guid EndStationId { get; set; }
         public Buyer Buyer { get; }
 
         public Money Price { get; private set; }

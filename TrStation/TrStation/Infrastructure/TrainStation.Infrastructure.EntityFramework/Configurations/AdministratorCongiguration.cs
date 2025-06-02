@@ -26,9 +26,9 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 .IsRequired()
                 .HasConversion(administratorLastName => administratorLastName.Value, str => new LastName(str))
                 .HasMaxLength(LastNameValidator.MAX_LENGTH);
-            builder.HasMany<Route>("_routes").WithOne(x => x.Administrator);
-            builder.HasMany<Tariffes>("_tariffes").WithOne(x => x.Administrator);
-            builder.HasMany<Buyer>("_buyers").WithOne(x => x.Administrator);
+            builder.HasMany<Route>("_routes").WithOne();
+            builder.HasMany<Tariffes>("_tariffes").WithOne();
+            builder.HasMany<Buyer>("_buyers").WithOne();
 
             builder.Ignore(x => x.Buyers);
             builder.Ignore(x => x.TariffZones);

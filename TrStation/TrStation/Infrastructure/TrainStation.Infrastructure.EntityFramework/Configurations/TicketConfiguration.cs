@@ -21,8 +21,14 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 src => src.Kind == DateTimeKind.Utc ? src : DateTime.SpecifyKind(src, DateTimeKind.Utc),
                 dst => dst.Kind == DateTimeKind.Utc ? dst : DateTime.SpecifyKind(dst, DateTimeKind.Utc)
             );
-            builder.HasOne(x => x.StartStation).WithOne();
-            builder.HasOne(x => x.EndStation).WithOne();
+            builder.HasOne(x => x.StartStation)
+                .WithMany()
+                .HasForeignKey("StartStationId")
+                .IsRequired();
+            builder.HasOne(x => x.EndStation)
+                .WithMany()
+                .HasForeignKey("EndStationId")
+                .IsRequired(); // 
             builder.HasOne(x => x.Buyer).WithMany("_buyerTickets");
             builder.Property(x => x.Price)
                 .IsRequired()

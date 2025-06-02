@@ -25,7 +25,7 @@ namespace TrStation.Domain.TrainStation.Domain.Entities
         //    AdministratorFirstName = administratorFirstName;
         //}
 
-        private static readonly ICollection<Route> _routes = [];
+        private readonly ICollection<Route> _routes = [];
 
         // private readonly ICollection<Station> _stations = [];
 

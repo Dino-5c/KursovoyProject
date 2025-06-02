@@ -22,7 +22,10 @@ namespace TrainStation.Infrastructure.TrainStation.Infrastructure.EntityFramewor
                 .HasConversion(stationName => stationName.Value, str => new StationName(str))
                 .HasMaxLength(StationNameValidator.MAX_LENGTH);
             builder.HasOne(x => x.Route).WithMany("_stations");
-            builder.HasOne(x => x.TariffZone).WithOne(); // Связь один к одному? У станции одна тарифная зона, у тарифной зоны не обязательно должна быть станция
+            builder.HasOne(x => x.TariffZone)
+                .WithMany() // У Tariffes нет коллекции станций
+                .HasForeignKey("TariffZoneId")
+                .IsRequired(); // Связь один к одному? У станции одна тарифная зона, у тарифной зоны не обязательно должна быть станция
             builder.Property(x => x.StationStatus).IsRequired();
             builder.Ignore(x => x.IsFrozen);
             builder.Ignore(x => x.IsActive);
